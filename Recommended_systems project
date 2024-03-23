@@ -1,0 +1,54 @@
+class IceCreamRecommendationSystem:
+    def __init__(self):
+        self.user_ratings = {
+            'Alice': {'strawberry': 3, 'chocolate': 4, 'vanilla': 1, 'mint': 4, 'caramel': 3},
+            'Bob': {'strawberry': 3, 'chocolate': 1, 'vanilla': 2, 'mint': 2, 'caramel': 3},
+            'Charlie': {}  # Ratings for user Charlie will be added later
+        }
+
+    def add_user_ratings(self, user, ratings):
+        if user not in self.user_ratings:
+            print("User not found.")
+            return
+        self.user_ratings[user] = ratings
+
+    def recommend_ice_cream(self, user):
+        if user not in self.user_ratings:
+            print("User not found.")
+            return
+
+        # Print ratings of users Alice and Bob
+        print("Ratings of users Alice and Bob:")
+        print("{:<10} {:<15} {:<15}".format("Flavor", "Alice", "Bob"))
+        for flavor in self.user_ratings['Alice']:
+            print("{:<10} {:<15} {:<15}".format(flavor, self.user_ratings['Alice'][flavor], self.user_ratings['Bob'][flavor]))
+
+        # Calculate average ratings for each flavor
+        avg_ratings = {}
+        for flavor in self.user_ratings['Alice']:
+            if flavor in self.user_ratings['Charlie'] and flavor in self.user_ratings['Bob']:
+                avg_ratings[flavor] = (self.user_ratings['Alice'][flavor] + self.user_ratings['Bob'][flavor] + self.user_ratings['Charlie'][flavor]) / 3
+            elif flavor in self.user_ratings['Alice'] and flavor in self.user_ratings['Bob']:
+                avg_ratings[flavor] = (self.user_ratings['Alice'][flavor] + self.user_ratings['Bob'][flavor]) / 2
+            elif flavor in self.user_ratings['Alice'] and flavor in self.user_ratings['Charlie']:
+                avg_ratings[flavor] = (self.user_ratings['Alice'][flavor] + self.user_ratings['Charlie'][flavor]) / 2
+            elif flavor in self.user_ratings['Bob'] and flavor in self.user_ratings['Charlie']:
+                avg_ratings[flavor] = (self.user_ratings['Bob'][flavor] + self.user_ratings['Charlie'][flavor]) / 2
+
+
+        # Recommend the flavor with the highest average rating
+        recommended_flavor = max(avg_ratings, key=avg_ratings.get)
+
+        print("\nRecommended ice cream flavor for user Charlie:")
+        print(f"{recommended_flavor}")
+
+
+# Create an instance of the recommendation system
+recommendation_system = IceCreamRecommendationSystem()
+
+# Add ratings for user Charlie
+user_charlie_ratings = {'strawberry': 4, 'chocolate': 3, 'vanilla': 5, 'mint': 4, 'caramel': 4}
+recommendation_system.add_user_ratings('Charlie', user_charlie_ratings)
+
+# Recommend an ice cream flavor for user Charlie
+recommendation_system.recommend_ice_cream('Charlie')
