@@ -1,0 +1,84 @@
+!pip install colorama
+import json
+import colorama
+from colorama import Fore, Style
+import random
+
+# Define data for intents (replace with your own intents and responses)
+data = {
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["hi", "hello", "hey"],
+      "responses": ["Hi there! How can I help you?", "Hello! How can I assist you?", "Hey! What can I do for you?"]
+    },
+    {
+      "tag": "farewell",
+      "patterns": ["bye", "goodbye"],
+      "responses": ["Goodbye!", "See you later!", "Bye!"]
+    },
+    {
+      "tag": "about",
+      "patterns": [ "what are you", "tell me about yourself"],
+      "responses": ["I am here to assist you with your questions.", 
+                    "I am an AI-powered chatbot designed to help users with various tasks.", 
+                    "I'm just a chatbot created to make your life easier."]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["thank you", "thanks", "thanks a lot"],
+      "responses": ["You're welcome!", "No problem!", "My pleasure!"]
+    },
+{
+      "tag": "how",
+      "patterns": ["how are you", "how is it possible","how old are you"],
+      "responses": ["I'm good, how about you", "It's sometime possible", "I don't know about it"]
+    },
+{
+      "tag": "what",
+      "patterns": ["what is your name"],
+      "responses": ["My name is chatbot, you can shortly call me as bot"]
+    },
+{
+      "tag": "which",
+      "patterns": ["which is your favorite color"],
+      "responses": ["blue"]
+    },
+{
+      "tag": "where",
+      "patterns": ["where is our location"],
+      "responses": ["Newyork"]
+    },
+{
+      "tag": "who",
+      "patterns": ["who created you"],
+      "responses": ["Tahira"]
+    }
+
+    # Add more intents as needed
+  ]
+}
+
+def chat():
+  max_len = 20  # Define the maximum sequence length here (adjust if needed)
+
+  while True:
+    print(Fore.LIGHTBLUE_EX + "User: " + Style.RESET_ALL, end="")
+    inp = input().lower()  # Convert user input to lowercase
+    if inp == "quit":
+      break
+
+    # Check for exact intent match
+    found = False
+    for intent in data['intents']:
+      if inp in intent['patterns']:  # Check for exact match in user input
+        print(Fore.GREEN + "ChatBot:" + Style.RESET_ALL, random.choice(intent['responses']))
+        found = True
+        break  # Exit the loop after finding a match
+
+    # If no exact match found and the intent is not "greeting", provide a generic response
+    if not found:
+      print(Fore.YELLOW + "ChatBot: I am still learning, but I don't quite understand that yet." + Style.RESET_ALL)
+
+# Start the chat interaction
+chat()
