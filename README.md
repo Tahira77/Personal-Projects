@@ -1,2 +1,3 @@
-# Personal-Projects-
+# My Personal Projects
+
 My own projects
